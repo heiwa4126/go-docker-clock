@@ -1,2 +1,2 @@
 #!/bin/sh
-docker run --rm -d -p 8080:8080 go-clock
+docker run --name goDockerClock --rm -d -p 8080:8080 go-docker-clock

@@ -122,6 +122,6 @@ inc/
 
 # End of https://www.gitignore.io/api/go,perl,emacs,visualstudiocode
 
-gohello
+go-docker-clock
 *.exe
 *.bak

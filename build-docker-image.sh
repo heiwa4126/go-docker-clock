@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build ./ -t go-clock
+docker build ./ -t go-docker-clock
