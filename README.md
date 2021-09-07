@@ -13,12 +13,28 @@ go build
 kill %1   # ここは要アレンジ
 ```
 
-# docker imageの作成
+# docker imageの作成とテスト
 
 ```sh
-./build-go.sh
+./build-go.sh　# 要upx
 ./build-docker-image.sh
 ./run-docker.sh
 ./test.sh
 ./stop-docker.sh
 ```
+
+# おまけ - docker imageをローカルファイルにsave/load
+
+セーブ
+```sh
+docker save go-docker-clock | gzip -9 >  go-docker-clock.tar.gz
+```
+
+ロード
+```
+zcat go-docker-clock.tar.gz | docker load
+```
+
+## TODO
+
+export/importも試す

@@ -125,3 +125,5 @@ inc/
 go-docker-clock
 *.exe
 *.bak
+*.tar
+*.gz
