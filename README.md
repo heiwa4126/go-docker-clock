@@ -1,8 +1,24 @@
 # go-docker-clock
 
 [FROM scratchから始める軽量Docker image for Go \- Qiita](https://qiita.com/Saint1991/items/dcd6a92e5074bd10f75a)
-にあったコードをそのままコピペして、
-サポートのスクリプトをつけたもの。
+にあったコードをそのままコピペして、サポートのスクリプトをつけたもの。
+
+時間を文字列で返すタイムサーバもどき。
+
+実行例:
+```
+$ ./go-docker-clock &
+$ curl http://localhost:8080/time
+2021-09-07 01:47:04 UTC
+```
+
+Docker imageは2.16MB
+```
+$ docker images go-docker-clock
+REPOSITORY        TAG       IMAGE ID       CREATED          SIZE
+go-docker-clock   latest    e9161e29eb40   16 minutes ago   2.16MB
+```
+
 
 # golangレベルでの開発
 
