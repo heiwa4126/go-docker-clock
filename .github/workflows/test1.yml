@@ -49,11 +49,21 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Tag and push Docker image
         run: |
-          IMAGE_NAME=ghcr.io/${{ github.repository }}:latest
-          IMAGE_SHA=ghcr.io/${{ github.repository }}:${{ github.sha }}
-          docker tag go-docker-clock $IMAGE_NAME
-          docker tag go-docker-clock $IMAGE_SHA
-          docker push $IMAGE_NAME
-          docker push $IMAGE_SHA
+          IMAGE_BASE=ghcr.io/${{ github.repository }}
+          IMAGE_LATEST=$IMAGE_BASE:latest
+
+          # Get image digest (SHA256 hash)
+          IMAGE_ID=$(docker inspect --format='{{index .Id}}' go-docker-clock | cut -d: -f2 | cut -c1-12)
+          IMAGE_DIGEST=$IMAGE_BASE:$IMAGE_ID
+
+          # Tag and push
+          docker tag go-docker-clock $IMAGE_LATEST
+          docker tag go-docker-clock $IMAGE_DIGEST
+          docker push $IMAGE_LATEST
+          docker push $IMAGE_DIGEST
+
+          echo "Pushed: $IMAGE_LATEST"
+          echo "Pushed: $IMAGE_DIGEST"
