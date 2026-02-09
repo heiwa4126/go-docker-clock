@@ -29,7 +29,11 @@ pid=$!
 kill "$pid"
 
 # lintとauditとformat
-task   # default action
+task audit
+task test
+task lint
+task fmt
+task   # 全部まとめて (default action)
 
 # ビルドして実行
 task build-go
