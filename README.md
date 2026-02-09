@@ -17,7 +17,7 @@ GitHub Package にイメージをパブリッシュします。
 
 ```sh
 docker run --rm -d -p 8080:8080 ghcr.io/heiwa4126/go-docker-clock:latest
-curl localhost:8080/time?tz=Asia/Tokyo
+curl "localhost:8080/time?tz=Asia/Tokyo"
 ```
 
 **重要**: push の前に `task` (引数なし)を実行しよう。linter が動きます
