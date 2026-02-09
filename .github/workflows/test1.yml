@@ -37,3 +37,17 @@ jobs:
       - run: task test
       - run: task build-go
       - run: task build-docker
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Tag and push Docker image
+        run: |
+          IMAGE_NAME=ghcr.io/${{ github.repository }}:latest
+          IMAGE_SHA=ghcr.io/${{ github.repository }}:${{ github.sha }}
+          docker tag go-docker-clock $IMAGE_NAME
+          docker tag go-docker-clock $IMAGE_SHA
+          docker push $IMAGE_NAME
+          docker push $IMAGE_SHA
