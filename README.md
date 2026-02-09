@@ -1,9 +1,23 @@
 # go-docker-clock
 
-[FROM scratchから始める軽量Docker image for Go \- Qiita](https://qiita.com/Saint1991/items/dcd6a92e5074bd10f75a)
+[FROM scratch から始める軽量 Docker image for Go \- Qiita](https://qiita.com/Saint1991/items/dcd6a92e5074bd10f75a)
 にあったコードをそのままコピペして、lintが通るようにしてサポートのスクリプトをつけたもの。
 
 時間を文字列で返すタイムサーバもどき。
+
+## 準備
+
+linter などは CI/CD できるよう
+[aquaproj/aqua](https://github.com/aquaproj/aqua)
+で管理しています。
+
+プロジェクトルートで
+
+```sh
+aqua i
+```
+
+でインストール
 
 ## 開発
 
@@ -39,7 +53,7 @@ $ curl http://localhost:8080/time
 2021-09-07 01:47:04 UTC
 ```
 
-## Docker image は 2MB 強
+## バイナリも Docker image も 2MB 強
 
 ```console
 $ docker images go-docker-clock

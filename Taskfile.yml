@@ -31,6 +31,11 @@ tasks:
     cmds:
       - go fmt ./...
 
+  format:
+    desc: Format Go code (alias)
+    cmds:
+      - task: fmt
+
   test:
     desc: Test Go code
     cmds:
@@ -78,6 +83,13 @@ tasks:
     cmds:
       - go get -u ./...
       - go mod tidy
+
+  update-aqua:
+    desc: Update Aqua dependencies
+    cmds:
+      - aqua update-aqua
+      - aqua update
+      - aqua vacuum
 
   pinact-update:
     desc: Update GitHub Actions (both workflows and actions)

@@ -18,3 +18,4 @@ packages:
   - name: mpalmer/action-validator@v0.8.0
   - name: golang/vuln/govulncheck@v1.1.4
   - name: hadolint/hadolint@v2.14.0
+  - name: upx/upx@v5.1.0
