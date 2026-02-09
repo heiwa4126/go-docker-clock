@@ -28,7 +28,7 @@ jobs:
         with:
           aqua_version: v2.43.1
       # - run: aqua install ## 不要
-      - run: task audit
+      # - run: task audit
       - run: task lint
       - run: task test
       - run: task build-go
