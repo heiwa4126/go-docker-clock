@@ -1,11 +1,28 @@
 # go-docker-clock
 
 [FROM scratch から始める軽量 Docker image for Go \- Qiita](https://qiita.com/Saint1991/items/dcd6a92e5074bd10f75a)
-にあったコードをそのままコピペして、lintが通るようにしてサポートのスクリプトをつけたもの。
+にあったコードをそのままコピペして、lint が通るようにしてサポートのスクリプトをつけたもの。
 
 時間を文字列で返すタイムサーバもどき。
 
-## 準備
+## Docker image を GitHub Package に発行
+
+semver の tag をつけて GitHub に push することで、
+GitHub Package にイメージをパブリッシュします。
+
+発行先:
+[Package go-docker-clock](https://github.com/heiwa4126/go-docker-clock/pkgs/container/go-docker-clock)
+
+使い方は
+
+```sh
+docker run --rm -d -p 8080:8080 ghcr.io/heiwa4126/go-docker-clock:latest
+curl localhost:8080/time?tz=Asia/Tokyo
+```
+
+**重要**: push の前に `task` (引数なし)を実行しよう。linter が動きます
+
+## 開発準備
 
 linter などは CI/CD できるよう
 [aquaproj/aqua](https://github.com/aquaproj/aqua)
@@ -17,7 +34,8 @@ linter などは CI/CD できるよう
 aqua i
 ```
 
-でインストール
+でインストール。
+(Go 自体は入ってないです。必要なら `aqua i golang/go`)
 
 ## 開発
 
