@@ -26,10 +26,12 @@ jobs:
           go-version: '1.25'
       - uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
         with:
-          aqua_version: v2.43.1
+          aqua_version: v2.56.6
       # - run: aqua install ## 不要
       # - run: task audit
       - run: task lint
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - run: task test
       - run: task build-go
       - run: task build-docker

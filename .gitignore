@@ -127,3 +127,6 @@ go-docker-clock
 *.bak
 *.tar
 *.gz
+
+tmp*.*
+*.tmp
