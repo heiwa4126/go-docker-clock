@@ -116,7 +116,7 @@ tasks:
     cmds:
       - task: lint-go
       - task: lint-dockerfile
-      # - task: lint-workflows
+      - task: lint-workflows
       # - task: lint-actions
 
   audit:
