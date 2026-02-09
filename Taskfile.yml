@@ -1,0 +1,107 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: "3"
+
+vars:
+  IMAGE_ID: "go-docker-clock"
+  CONTAINER_NAME: "goDockerClock"
+
+tasks:
+  default:
+    cmds:
+      - task: audit
+      - task: test
+      - task: lint
+      - task: fmt
+      - task: run
+
+  build:
+    desc: Build the Go binary for Linux AMD64
+    cmds:
+      - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o go-docker-clock -ldflags="-w -s" -trimpath main.go
+      - upx --best go-docker-clock
+
+  run:
+    desc: Run excellent Go program
+    cmds:
+      - go run .
+
+  fmt:
+    desc: Format Go code
+    cmds:
+      - go fmt ./...
+
+  test:
+    desc: Test Go code
+    cmds:
+      - go test -v
+
+  build-docker:
+    desc: Build Docker image
+    cmds:
+      - docker build ./ -t ${IMAGE_ID}
+      - docker image list ${IMAGE_ID}
+
+  start-docker:
+    desc: Run Docker container
+    cmds :
+      - docker run --name ${CONTAINER_NAME} --rm -d -p 8080:8080 ${IMAGE_ID}
+
+  stop-docker:
+    desc: Stop Docker container
+    cmds:
+      - docker stop ${CONTAINER_NAME}
+
+  smoke-test:
+    desc: Run smoke tests
+    cmds:
+      - ./smoke-test.sh
+
+  lint-go:
+    desc: Lint Go code
+    cmds:
+      - go vet ./...
+      - golangci-lint run
+
+  audit-go:
+    desc: Audit Go code
+    cmds:
+      - govulncheck ./...
+
+  update-go:
+    desc: Update Go dependencies
+    cmds:
+      - go get -u ./...
+      - go mod tidy
+
+  pinact-update:
+    desc: Update GitHub Actions (both workflows and actions)
+    cmds:
+      - pinact run --update
+
+  lint-actions:
+    desc: Lint GitHub Actions
+    cmds:
+      - find -name action.yml -o -name action.yaml | xargs action-validator -v
+
+  lint-workflows:
+    desc: Lint GitHub Workflows
+    cmds:
+      - actionlint --verbose
+
+  lint-workflows-docker:
+    desc: Lint GitHub Workflows with Docker
+    cmds:
+      - docker run --rm -v "$(pwd):$(pwd)" -w "$(pwd)" rhysd/actionlint:latest --verbose
+
+  lint:
+    desc: Lint all
+    cmds:
+      - task: lint-go
+      - task: lint-workflows
+      - task: lint-actions
+
+  audit:
+    desc: Audit all
+    cmds:
+      - task: audit-go
