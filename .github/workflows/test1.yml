@@ -56,14 +56,14 @@ jobs:
           IMAGE_LATEST=$IMAGE_BASE:latest
 
           # Get image digest (SHA256 hash)
-          IMAGE_ID=$(docker inspect --format='{{index .Id}}' go-docker-clock | cut -d: -f2 | cut -c1-12)
+          IMAGE_ID=$(docker inspect --format='{{index .Id}}' "go-docker-clock" | cut -d: -f2 | cut -c1-12)
           IMAGE_DIGEST=$IMAGE_BASE:$IMAGE_ID
 
           # Tag and push
-          docker tag go-docker-clock $IMAGE_LATEST
-          docker tag go-docker-clock $IMAGE_DIGEST
-          docker push $IMAGE_LATEST
-          docker push $IMAGE_DIGEST
+          docker tag "go-docker-clock" "$IMAGE_LATEST"
+          docker tag "go-docker-clock" "$IMAGE_DIGEST"
+          docker push "$IMAGE_LATEST"
+          docker push "$IMAGE_DIGEST"
 
           echo "Pushed: $IMAGE_LATEST"
           echo "Pushed: $IMAGE_DIGEST"
