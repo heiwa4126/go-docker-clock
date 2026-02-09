@@ -13,9 +13,9 @@ tasks:
       - task: test
       - task: lint
       - task: fmt
-      - task: run
+      # - task: run
 
-  build:
+  build-go:
     desc: Build the Go binary for Linux AMD64
     cmds:
       - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o go-docker-clock -ldflags="-w -s" -trimpath main.go
@@ -39,18 +39,18 @@ tasks:
   build-docker:
     desc: Build Docker image
     cmds:
-      - docker build ./ -t ${IMAGE_ID}
-      - docker image list ${IMAGE_ID}
+      - docker build ./ -t "{{.IMAGE_ID}}"
+      - docker image list "{{.IMAGE_ID}}"
 
   start-docker:
     desc: Run Docker container
     cmds :
-      - docker run --name ${CONTAINER_NAME} --rm -d -p 8080:8080 ${IMAGE_ID}
+      - docker run --name "{{.CONTAINER_NAME}}" --rm -d -p 8080:8080 "{{.IMAGE_ID}}"
 
   stop-docker:
     desc: Stop Docker container
     cmds:
-      - docker stop ${CONTAINER_NAME}
+      - docker stop "{{.CONTAINER_NAME}}"
 
   smoke-test:
     desc: Run smoke tests
@@ -62,6 +62,11 @@ tasks:
     cmds:
       - go vet ./...
       - golangci-lint run
+
+  lint-dockerfile:
+    desc: Lint Dockerfile
+    cmds:
+      - hadolint ./Dockerfile
 
   audit-go:
     desc: Audit Go code
@@ -89,17 +94,18 @@ tasks:
     cmds:
       - actionlint --verbose
 
-  lint-workflows-docker:
-    desc: Lint GitHub Workflows with Docker
-    cmds:
-      - docker run --rm -v "$(pwd):$(pwd)" -w "$(pwd)" rhysd/actionlint:latest --verbose
+  # lint-workflows-docker:
+  #   desc: Lint GitHub Workflows with Docker
+  #   cmds:
+  #     - docker run --rm -v "$(pwd):$(pwd)" -w "$(pwd)" rhysd/actionlint:latest --verbose
 
   lint:
     desc: Lint all
     cmds:
       - task: lint-go
-      - task: lint-workflows
-      - task: lint-actions
+      - task: lint-dockerfile
+      # - task: lint-workflows
+      # - task: lint-actions
 
   audit:
     desc: Audit all

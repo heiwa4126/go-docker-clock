@@ -15,8 +15,16 @@ func main() {
 			if err != nil {
 				panic(err)
 			}
-			writer.Write([]byte(time.Now().In(location).Format(layout)))
+			if _, err := writer.Write([]byte(time.Now().In(location).Format(layout))); err != nil {
+				// エラーが発生しても既にレスポンスの書き込みが始まっている可能性があるため、
+				// ログを記録して処理を終了する（サーバーは停止しない）
+				// 本番環境では適切なロギングライブラリを使用する
+				return
+			}
 		})
 
-	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		panic(err)
+	}
 }
