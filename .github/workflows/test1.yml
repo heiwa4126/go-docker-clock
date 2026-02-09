@@ -37,6 +37,12 @@ jobs:
       - run: task test
       - run: task build-go
       - run: task build-docker
+      - name: Smoke-test with docker
+        run: |
+          task start-docker
+          task smoke-test
+          task stop-docker
+
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
         with:
