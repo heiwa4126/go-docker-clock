@@ -32,10 +32,10 @@ jobs:
       - uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
         with:
           # aqua_version: v2.56.6
-          aqua_version: " " # 最終的に`aqua self-update`に渡される. 空文字列にすると最新バージョンになる(はず)
+          aqua_version: " " # `aqua self-update` に渡される. 空文字列にすると最新バージョンになる(はず)
           aqua_opts: " " # `-l` オプションを無効化してリンクでないインストールにする
           github_token: ${{ github.token }} # リンクでないインストールに必要
-      - name: "INFO: versions"
+      - name: "INFO: tool versions"
         run: |
           echo "::group::Show version"
           go version
@@ -48,6 +48,7 @@ jobs:
       - run: task test
       - run: task build-go
       - run: task build-docker
+
       - name: Smoke-test with docker
         run: |
           task start-docker
