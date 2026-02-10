@@ -31,9 +31,14 @@ jobs:
           cache-dependency-path: aqua.yaml
       - uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
         with:
-          aqua_version: v2.56.6
-          aqua_opts: " "
-          github_token: ${{ github.token }}
+          # aqua_version: v2.56.6
+          aqua_version: " " # 最終的に`aqua self-update`に渡される. 空文字列にすると最新バージョンになる(はず)
+          aqua_opts: " " # `-l` オプションを無効化してリンクでないインストールにする
+          github_token: ${{ github.token }} # リンクでないインストールに必要
+      - name: "INFO: versions"
+        run: |
+          go version
+          aqua --version
       - run: task audit
       - run: task lint
       - run: task test
