@@ -37,8 +37,12 @@ jobs:
           github_token: ${{ github.token }} # リンクでないインストールに必要
       - name: "INFO: versions"
         run: |
+          echo "::group::Show version"
           go version
           aqua --version
+          upx -V
+          docker --version
+          echo "::endgroup::"
       - run: task audit
       - run: task lint
       - run: task test
