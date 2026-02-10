@@ -123,3 +123,9 @@ tasks:
     desc: Audit all
     cmds:
       - task: audit-go
+
+  trivy:
+    desc: Scan Docker image with Trivy
+    cmds:
+      - trivy image --severity HIGH,CRITICAL "{{.IMAGE_ID}}"
+      - trivy fs --severity HIGH,CRITICAL .
