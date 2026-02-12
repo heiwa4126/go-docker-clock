@@ -1,0 +1,5 @@
+FROM gcr.io/distroless/static-debian13
+
+COPY go-docker-clock /clock
+
+ENTRYPOINT ["/clock"]

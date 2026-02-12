@@ -81,6 +81,8 @@ REPOSITORY        TAG       IMAGE ID       CREATED          SIZE
 go-docker-clock   latest    e9161e29eb40   16 minutes ago   2.16MB
 ```
 
+→ UPXやめました。それでも8MB
+
 # おまけ - docker imageをローカルファイルにsave/load
 
 セーブ

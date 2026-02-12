@@ -55,7 +55,13 @@ tasks:
     cmds:
       - rm -f "{{.BIN_NAME}}"
       - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o "{{.BIN_NAME}}" -ldflags="-w -s" -trimpath main.go
+
+  build-go-upx:
+    desc: Build the Go binary for Linux AMD64 and compress it with UPX
+    cmds:
+      - task: build-go
       - upx --best "{{.BIN_NAME}}"
+
   start-go:
     desc: Start the application
     cmds:
@@ -68,10 +74,21 @@ tasks:
       - docker build ./ -t "{{.IMAGE_ID}}"
       - docker image list "{{.IMAGE_ID}}"
 
+  build-docker-distroless:
+    desc: Build Docker image
+    cmds:
+      - docker build ./ -f Dockerfile-distroless -t "{{.IMAGE_ID}}-distroless"
+      - docker image list "{{.IMAGE_ID}}-distroless"
+
   start-docker:
     desc: Run Docker container
     cmds :
       - docker run --name "{{.CONTAINER_NAME}}" --rm -d -p 8080:8080 "{{.IMAGE_ID}}"
+
+  start-docker-distroless:
+    desc: Run Docker container
+    cmds :
+      - docker run --name "{{.CONTAINER_NAME}}" --rm -d -p 8080:8080 "{{.IMAGE_ID}}-distroless"
 
   stop-docker:
     desc: Stop Docker container
