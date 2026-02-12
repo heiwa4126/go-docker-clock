@@ -70,14 +70,15 @@ tasks:
 
   build-docker:
     desc: Build Docker image
+    # SOURCE_DATE_EPOCHのテスト
     cmds:
-      - docker build ./ -t "{{.IMAGE_ID}}"
+      - SOURCE_DATE_EPOCH=1770886219 docker build ./ -t "{{.IMAGE_ID}}"
       - docker image list "{{.IMAGE_ID}}"
 
   build-docker-distroless:
     desc: Build Docker image
     cmds:
-      - docker build ./ -f Dockerfile-distroless -t "{{.IMAGE_ID}}-distroless"
+      - SOURCE_DATE_EPOCH=1770886219 docker build ./ -f Dockerfile-distroless -t "{{.IMAGE_ID}}-distroless"
       - docker image list "{{.IMAGE_ID}}-distroless"
 
   start-docker:
