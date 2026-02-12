@@ -40,7 +40,7 @@ jobs:
           echo "::group::Show version"
           go version
           aqua --version
-          upx -V
+          # upx -V
           docker --version
           echo "::endgroup::"
       - run: task audit
