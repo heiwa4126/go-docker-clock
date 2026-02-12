@@ -83,7 +83,23 @@ go-docker-clock   latest    e9161e29eb40   16 minutes ago   2.16MB
 
 → いろいろ考えて UPX やめました。それでも8MB
 
-# おまけ - docker imageをローカルファイルにsave/load
+## zoneinfo.zip 式をやめる
+
+Dockerfileの
+
+```dockerfile
+FROM scratch
+
+ADD https://github.com/golang/go/raw/master/lib/time/zoneinfo.zip /zoneinfo.zip
+ENV ZONEINFO=/zoneinfo.zip
+# ...
+```
+
+をやめて、ビルド時に `-tags timetzdata` をつける式にした。Go 1.15から使えるらしい。[Go 1.15 Release Notes - The Go Programming Language](https://go.dev/doc/go1.15#time_tzdata)
+
+※ もう1つの方法は `import _ "time/tzdata"`
+
+## おまけ - docker imageをローカルファイルにsave/load
 
 セーブ
 
