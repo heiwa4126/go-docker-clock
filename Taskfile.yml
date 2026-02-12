@@ -3,6 +3,7 @@
 version: "3"
 
 vars:
+  BIN_NAME: "go-docker-clock"
   IMAGE_ID: "go-docker-clock"
   CONTAINER_NAME: "goDockerClock"
 
@@ -15,16 +16,24 @@ tasks:
       - task: fmt
       # - task: run
 
-  build-go:
-    desc: Build the Go binary for Linux AMD64
-    cmds:
-      - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o go-docker-clock -ldflags="-w -s" -trimpath main.go
-      - upx --best go-docker-clock
-
   run:
     desc: Run excellent Go program
     cmds:
       - go run .
+
+  start:
+    desc: Start the application
+    cmds:
+      - task: kill
+      - sh -c 'go run . & echo "$!" > tmp.pid'
+  kill:
+    desc: Kill the application
+    cmds:
+      - sh -c 'if [ -f tmp.pid ]; then kill "$(cat tmp.pid)"; rm tmp.pid; fi'
+  stop:
+    desc: Stop the application
+    cmds:
+      - task: kill
 
   fmt:
     desc: Format Go code
@@ -40,6 +49,18 @@ tasks:
     desc: Test Go code
     cmds:
       - go test -v
+
+  build-go:
+    desc: Build the Go binary for Linux AMD64
+    cmds:
+      - rm -f "{{.BIN_NAME}}"
+      - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o "{{.BIN_NAME}}" -ldflags="-w -s" -trimpath main.go
+      - upx --best "{{.BIN_NAME}}"
+  start-go:
+    desc: Start the application
+    cmds:
+      - task: kill
+      - sh -c './{{.BIN_NAME}} & echo "$!" > tmp.pid'
 
   build-docker:
     desc: Build Docker image

@@ -41,10 +41,9 @@ aqua i
 
 ```sh
 # 普通に実行
-go run . &
-pid=$!
+task start
 ./smoke-test.sh
-kill "$pid"
+task stop
 
 # lintとauditとformat
 task audit
@@ -55,10 +54,9 @@ task   # 全部まとめて (default action)
 
 # ビルドして実行
 task build-go
-./go-docker-clock&
-pid=$!
+task start-go
 ./smoke-test.sh
-kill "$pid"
+task kill
 
 # コンテナ作って実行
 task build-docker  # `task build-go` してから実行
