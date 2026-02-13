@@ -56,6 +56,12 @@ tasks:
       - rm -f "{{.BIN_NAME}}"
       - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o "{{.BIN_NAME}}" -tags timetzdata -ldflags="-w -s" -trimpath main.go
 
+  build-go-distroless:
+    desc: Build the Go binary for Linux AMD64
+    cmds:
+      - rm -f "{{.BIN_NAME}}"
+      - CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o "{{.BIN_NAME}}" -ldflags="-w -s" -trimpath main.go
+
   build-go-upx:
     desc: Build the Go binary for Linux AMD64 and compress it with UPX
     cmds:
@@ -71,12 +77,14 @@ tasks:
   build-docker:
     desc: Build Docker image
     cmds:
+      - task: build-go
       - docker build ./ -t "{{.IMAGE_ID}}"
       - docker image list "{{.IMAGE_ID}}"
 
   build-docker-distroless:
     desc: Build Docker image
     cmds:
+      - task: build-go-distroless
       - docker build ./ -f Dockerfile-distroless -t "{{.IMAGE_ID}}-distroless"
       - docker image list "{{.IMAGE_ID}}-distroless"
 

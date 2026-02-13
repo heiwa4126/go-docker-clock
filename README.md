@@ -59,7 +59,7 @@ task start-go
 task kill
 
 # コンテナ作って実行
-task build-docker  # `task build-go` してから実行
+task build-docker
 task start-docker
 ./smoke-test.sh
 task stop-docker
@@ -98,6 +98,14 @@ ENV ZONEINFO=/zoneinfo.zip
 をやめて、ビルド時に `-tags timetzdata` をつける式にした。Go 1.15から使えるらしい。[Go 1.15 Release Notes - The Go Programming Language](https://go.dev/doc/go1.15#time_tzdata)
 
 ※ もう1つの方法は `import _ "time/tzdata"`
+
+もう1つ
+
+```sh
+task build-docker-distroless
+```
+
+も作ってみた。
 
 ## おまけ - docker imageをローカルファイルにsave/load
 
