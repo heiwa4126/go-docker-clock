@@ -5,6 +5,8 @@
 
 時間を文字列で返すタイムサーバもどき。
 
+Go 1.25 使用
+
 ## Docker image を GitHub Package に発行
 
 semver の tag をつけて GitHub に push することで、
