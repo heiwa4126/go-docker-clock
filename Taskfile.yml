@@ -90,12 +90,12 @@ tasks:
 
   start-docker:
     desc: Run Docker container
-    cmds :
+    cmds:
       - docker run --name "{{.CONTAINER_NAME}}" --rm -d -p 8080:8080 "{{.IMAGE_ID}}"
 
   start-docker-distroless:
     desc: Run Docker container
-    cmds :
+    cmds:
       - docker run --name "{{.CONTAINER_NAME}}" --rm -d -p 8080:8080 "{{.IMAGE_ID}}-distroless"
 
   stop-docker:
