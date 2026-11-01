@@ -32,7 +32,7 @@ jobs:
           cache: false
           # cache-dependency-path: go.sum aqua.yaml
           cache-dependency-path: aqua.yaml
-      - uses: aquaproj/aqua-installer@96a9bc20066c5bf5e275b41019cfc165b25f4e2e # v4.0.5
+      - uses: aquaproj/aqua-installer@611554c6f0137ba41c8dd15aca8bee82504ea461 # v4.1.1
         with:
           # aqua_version: v2.56.6
           aqua_version: " " # `aqua self-update` に渡される. 空文字列にすると最新バージョンになる(はず)
@@ -59,7 +59,7 @@ jobs:
           task stop-docker
 
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+        uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
