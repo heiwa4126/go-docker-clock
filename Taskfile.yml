@@ -46,9 +46,26 @@ tasks:
       - task: fmt
 
   test:
-    desc: Test Go code
+    desc: Run tests
     cmds:
-      - go test -v
+      - go test ./...
+
+  test-race:
+    desc: Run tests with the race detector
+    cmds:
+      - go test -race ./...
+
+  coverage:
+    desc: Generate a coverage report
+    cmds:
+      - go test -coverprofile=coverage.out ./...
+      - go tool cover -func=coverage.out
+
+  tidy:
+    desc: Tidy and verify Go modules
+    cmds:
+      - go mod tidy
+      - go mod verify
 
   build-go:
     desc: Build the Go binary for Linux AMD64
@@ -169,6 +186,12 @@ tasks:
     desc: Audit all
     cmds:
       - task: audit-go
+
+  update:
+    desc: Update dependencies and format the Go code
+    cmds:
+      - go get -u ./...
+      - task: tidy
 
   trivy:
     desc: Scan Docker image with Trivy
