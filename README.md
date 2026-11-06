@@ -22,7 +22,7 @@ docker run --rm -d -p 8080:8080 ghcr.io/heiwa4126/go-docker-clock:latest
 curl "localhost:8080/time?tz=Asia/Tokyo"
 ```
 
-**重要**: push の前に `task` (引数なし)を実行しよう。linter が動きます
+**重要**: push の前に`task` (引数なし)を実行しよう。linter が動きます
 
 ## 開発準備
 
@@ -37,7 +37,7 @@ aqua i
 ```
 
 でインストール。
-(Go 自体は入ってないです。必要なら `aqua i golang/go`)
+(Go 自体は入ってないです。必要なら`aqua i golang/go`)
 
 ## 開発
 
@@ -97,9 +97,9 @@ ENV ZONEINFO=/zoneinfo.zip
 # ...
 ```
 
-をやめて、ビルド時に `-tags timetzdata` をつける式にした。Go 1.15 から使えるらしい。[Go 1.15 Release Notes - The Go Programming Language](https://go.dev/doc/go1.15#time_tzdata)
+をやめて、ビルド時に`-tags timetzdata`をつける式にした。Go 1.15 から使えるらしい。[Go 1.15 Release Notes - The Go Programming Language](https://go.dev/doc/go1.15#time_tzdata)
 
-※ もう 1 つの方法は `import _ "time/tzdata"`
+※ もう 1 つの方法は`import _ "time/tzdata"`
 
 もう 1 つ
 
